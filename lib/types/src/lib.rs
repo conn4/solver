@@ -4,8 +4,10 @@ pub enum Player {
     B,
 }
 
+pub type Board = [[Option<Player>; 7]; 6];
+
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub struct State {
     pub turn: Player,
-    pub board: [[Option<Player>; 7]; 6],
+    pub board: Board,
 }
