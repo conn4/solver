@@ -1,11 +1,11 @@
-use conn4_types::{Board, Player};
+use conn4_types::{Board, Player, BOARD_HEIGHT, BOARD_WIDTH};
 
 pub fn encode(board: Board) -> u64 {
     let mut result: u64 = 0;
 
-    for col in 0..7 {
+    for col in 0..BOARD_WIDTH {
         let mut column = 1;
-        for row in 0..6 {
+        for row in 0..BOARD_HEIGHT {
             if let Some(player) = board[row][col] {
                 column = (column << 1) | if player == Player::A { 0 } else { 1 };
             } else {
@@ -19,10 +19,10 @@ pub fn encode(board: Board) -> u64 {
 }
 
 pub fn decode(encoded: u64) -> Board {
-    let mut result = [[None; 7]; 6];
+    let mut result: Board = Default::default();
 
-    for col in 0..7 {
-        let mut column = (encoded >> (col * 7)) & 0b1111111;
+    for col in 0..BOARD_WIDTH {
+        let mut column = (encoded >> (col * (BOARD_HEIGHT + 1))) & ((1 << (BOARD_HEIGHT + 1)) - 1);
         let mut rev = Vec::new();
         while column > 1 {
             rev.push(if column & 1 == 0 {
