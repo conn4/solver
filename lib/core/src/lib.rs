@@ -87,9 +87,7 @@ pub fn result(board: Board) -> Option<Result> {
     }
 
     for col in 0..BOARD_WIDTH {
-        if board[BOARD_HEIGHT - 1][col] == None {
-            return None;
-        }
+        board[BOARD_HEIGHT - 1][col]?;
     }
 
     Some(Result::Draw)
